@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -22,7 +21,7 @@ public abstract class AbstractParser implements IParser {
         this.type = type;
     }
 
-    protected String[] getAllFilesFromDirectory(String directory, String type) throws ParserException {
+    public String[] getConcreteTypeFilesFromDirectory(String directory, String type) throws ParserException {
         String[] fileNames;
 
         try {
@@ -42,7 +41,7 @@ public abstract class AbstractParser implements IParser {
     public  List<Article> getArticles(String directory) throws ParserException{
         List<Article> articleList = new ArrayList<>();
 
-        String[] names = getAllFilesFromDirectory(directory, type);
+        String[] names = getConcreteTypeFilesFromDirectory(directory, type);
 
         for (String name : names) {
             List<Article> list = parse(name);

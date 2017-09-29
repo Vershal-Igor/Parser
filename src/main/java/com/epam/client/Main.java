@@ -14,22 +14,22 @@ import static com.epam.ParserMaker.getParserByName;
 
 
 public class Main {
-    private static final String directory = "src/main/resources/files";
+    private static final String DIRECTORY = "src/main/resources/files";
 
     public static void main(String[] args) throws ParserException {
 
         ParserMaker XMLmaker = getParserByName(ParserType.XML);
         IParser XMLparser = XMLmaker.createParser();
-        System.out.println(XMLparser.getArticles(directory));
+        System.out.println(XMLparser.getArticles(DIRECTORY));
 
         ParserMaker JSONmaker = getParserByName(ParserType.JSON);
         IParser JSONParser = JSONmaker.createParser();
-        System.out.println(JSONParser.getArticles(directory));
+        System.out.println(JSONParser.getArticles(DIRECTORY));
 
 
         ParserMaker TXTmaker = getParserByName(ParserType.TXT);
         IParser TXTParser = TXTmaker.createParser();
-        System.out.println(TXTParser.getArticles(directory));
+        System.out.println(TXTParser.getArticles(DIRECTORY));
 
 
     }
