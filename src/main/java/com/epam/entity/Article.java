@@ -3,20 +3,20 @@ package com.epam.entity;
 
 import com.epam.adapter.StringAdapter;
 
+import com.epam.deserializer.CustomDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 
-
+@JsonDeserialize(using = CustomDeserializer.class)
 @XmlRootElement(name = "article")
-@JsonRootName(value = "article")
-@JsonIgnoreProperties({"contents"})
 public class Article implements Serializable {
 
     private String title;
@@ -35,7 +35,7 @@ public class Article implements Serializable {
         return title;
     }
 
-    @XmlElement(name = "title", required = true)
+    @XmlElement(name = "title")
     @XmlJavaTypeAdapter(StringAdapter.class)
     public void setTitle(String title) {
         this.title = title;
@@ -47,7 +47,6 @@ public class Article implements Serializable {
 
     @XmlElement(name = "author", defaultValue = "Unknown")
     @XmlJavaTypeAdapter(StringAdapter.class)
-    @JsonProperty(defaultValue = "Unknown")
     public void setAuthor(String author) {
         this.author = author;
     }
