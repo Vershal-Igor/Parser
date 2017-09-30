@@ -12,7 +12,7 @@ import static com.epam.ParserMaker.getParserByName;
 import static org.junit.Assert.*;
 
 public class JSONParserTest {
-    public static Logger logger = Logger.getLogger(JSONParserTest.class);
+    private static Logger logger = Logger.getLogger(JSONParserTest.class);
 
     private static final String DIRECTORY = "src/main/resources/files";
     private static final String TEST_DIRECTORY = "src/test/resources/files";

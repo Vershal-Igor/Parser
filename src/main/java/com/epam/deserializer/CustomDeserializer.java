@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 
 public class CustomDeserializer extends JsonDeserializer<Article> {
-    private static final String DEFAULT_AUTHOR = "UNKNOWN";
-    private static final String NO_ELEMENT = "";
+    private static final String DEFAULT_ELEMENT = "UNKNOWN";
+    private static final String NO_ELEMENT = " ";
 
     @Override
     public Article deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException,
@@ -20,18 +20,19 @@ public class CustomDeserializer extends JsonDeserializer<Article> {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         JsonNode articleNode = node.get("article");
 
-        final String title = safetyGetElement(articleNode.get("title"));
-        String authorName = safetyGetElement(articleNode.get("author_name"));
-        if (authorName.isEmpty()) {
-            authorName = DEFAULT_AUTHOR;
-        }
+        final String title = getCorrectElement(articleNode.get("title"));
+
+        String authorName = getCorrectElement(articleNode.get("author_name"));
 
         return new Article(title, authorName);
     }
 
-    private String safetyGetElement(JsonNode jsonNode) {
+    private String getCorrectElement(JsonNode jsonNode) {
         if (jsonNode == null) {
             return NO_ELEMENT;
+        }
+        if (jsonNode.asText().isEmpty()) {
+            return DEFAULT_ELEMENT;
         } else {
             return jsonNode.asText();
         }

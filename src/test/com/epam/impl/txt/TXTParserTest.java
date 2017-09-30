@@ -11,7 +11,7 @@ import static com.epam.ParserMaker.getParserByName;
 import static org.junit.Assert.*;
 
 public class TXTParserTest {
-    public static Logger logger = Logger.getLogger(TXTParserTest.class);
+    private static Logger logger = Logger.getLogger(TXTParserTest.class);
     private static final String DIRECTORY = "src/main/resources/files";
     private static final String TEST_DIRECTORY = "src/test/resources/files";
     private IParser TXTparser;

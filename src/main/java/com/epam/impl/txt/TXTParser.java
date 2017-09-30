@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TXTParser extends AbstractParser {
-    public static Logger logger = Logger.getLogger(TXTParser.class);
+    private static Logger logger = Logger.getLogger(TXTParser.class);
     private static final String FNF_EXCEPTION = "No such file:";
     private static final String IO_EXCEPTION = "Input exception:";
     private static final String TYPE = "txt";
@@ -34,7 +34,8 @@ public class TXTParser extends AbstractParser {
 
     @Override
     protected List<Article> parse(String directory) throws ParserException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(directory)), Charset.forName(FILE_ENCODING)))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(directory)),
+                Charset.forName(FILE_ENCODING)))) {
 
             String title = reader.readLine();
             String author = pullAuthorName(reader);

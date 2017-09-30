@@ -17,7 +17,7 @@ import static com.epam.impl.xml.XMLParser.returnArticleWithCorrectValues;
 import static org.junit.Assert.*;
 
 public class XMLParserTest {
-    public static Logger logger = Logger.getLogger(XMLParserTest.class);
+    private static Logger logger = Logger.getLogger(XMLParserTest.class);
 
     private static final String DIRECTORY = "src/main/resources/files";
     private static final String TEST_DIRECTORY = "src/test/resources/files";
@@ -28,10 +28,10 @@ public class XMLParserTest {
 
     private static final String XML_ARTICLE_3 = "src/main/resources/files/Article3.xml";
     private static final String TITLE_ARTICLE_3 = "Spring Framework - Overview";
-    private static final String AUTHOR_ARTICLE_3 = "";
+    private static final String AUTHOR_ARTICLE_3 = "UNKNOWN";
 
     private static final String XML_ARTICLE_5 = "src/main/resources/files/Article5.xml";
-    private static final String TITLE_ARTICLE_5 = "";
+    private static final String TITLE_ARTICLE_5 = "UNKNOWN";
     private static final String AUTHOR_ARTICLE_5 = "Thorben Janssen";
 
     private IParser XMLparser;

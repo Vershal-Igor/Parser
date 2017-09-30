@@ -13,9 +13,9 @@ import java.util.List;
 
 
 public class XMLParser extends AbstractParser {
-    public static Logger logger = Logger.getLogger(XMLParser.class);
+    private static Logger logger = Logger.getLogger(XMLParser.class);
     private static final String TYPE = "xml";
-    private static final String NO_ELEMENT = "";
+    private static final String DEFAULT_ELEMENT = "UNKNOWN";
     private static final String PARSER_EXCEPTION = "Exception while parsing";
 
     public XMLParser() {
@@ -39,11 +39,13 @@ public class XMLParser extends AbstractParser {
     }
 
     static Article returnArticleWithCorrectValues(Article value) {
+
         if (value.getTitle() == null) {
-            value.setTitle(NO_ELEMENT);
+            value.setTitle(DEFAULT_ELEMENT);
         }
+
         if (value.getAuthor() == null) {
-            value.setAuthor(NO_ELEMENT);
+            value.setAuthor(DEFAULT_ELEMENT);
         }
         return value;
     }

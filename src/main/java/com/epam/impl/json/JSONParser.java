@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JSONParser extends AbstractParser {
-    public static Logger logger = Logger.getLogger(JSONParser.class);
+    private static Logger logger = Logger.getLogger(JSONParser.class);
     private static final String TYPE = "json";
     private static final String PARSER_EXCEPTION = "Exception while parsing";
 
