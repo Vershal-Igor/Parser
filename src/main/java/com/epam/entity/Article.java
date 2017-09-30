@@ -1,26 +1,13 @@
 package com.epam.entity;
 
 
-import com.epam.adapter.StringAdapter;
-
-import com.epam.deserializer.CustomDeserializer;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 
-@JsonDeserialize(using = CustomDeserializer.class)
-@XmlRootElement(name = "article")
 public class Article implements Serializable {
 
     private String title;
     private String author;
+    private String contents;
 
     public Article() {
     }
@@ -35,8 +22,7 @@ public class Article implements Serializable {
         return title;
     }
 
-    @XmlElement(name = "title")
-    @XmlJavaTypeAdapter(StringAdapter.class)
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -45,12 +31,18 @@ public class Article implements Serializable {
         return author;
     }
 
-    @XmlElement(name = "author", defaultValue = "Unknown")
-    @XmlJavaTypeAdapter(StringAdapter.class)
+
     public void setAuthor(String author) {
         this.author = author;
     }
 
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
 
     @Override
     public String toString() {
@@ -68,13 +60,15 @@ public class Article implements Serializable {
         Article article = (Article) o;
 
         if (title != null ? !title.equals(article.title) : article.title != null) return false;
-        return author != null ? author.equals(article.author) : article.author == null;
+        if (author != null ? !author.equals(article.author) : article.author != null) return false;
+        return contents != null ? contents.equals(article.contents) : article.contents == null;
     }
 
     @Override
     public int hashCode() {
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (author != null ? author.hashCode() : 0);
+        result = 31 * result + (contents != null ? contents.hashCode() : 0);
         return result;
     }
 }

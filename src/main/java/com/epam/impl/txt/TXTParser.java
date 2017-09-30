@@ -3,6 +3,7 @@ package com.epam.impl.txt;
 import com.epam.entity.Article;
 import com.epam.exception.ParserException;
 import com.epam.impl.AbstractParser;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -10,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TXTParser extends AbstractParser {
+    public static Logger logger = Logger.getLogger(TXTParser.class);
+    private static final String FNF_EXCEPTION = "No such file:";
+    private static final String IO_EXCEPTION = "Input exception:";
     private static final String TYPE = "txt";
     private static final String FILE_ENCODING = "utf-8";
 
@@ -39,9 +43,11 @@ public class TXTParser extends AbstractParser {
 
             return articles;
         } catch (FileNotFoundException e) {
-            throw new ParserException("No such file:" + directory, e);
+            logger.error(FNF_EXCEPTION + directory, e);
+            throw new ParserException(FNF_EXCEPTION + directory, e);
         } catch (IOException e) {
-            throw new ParserException("Input exception:", e);
+            logger.error(IO_EXCEPTION, e);
+            throw new ParserException(IO_EXCEPTION, e);
         }
     }
 }

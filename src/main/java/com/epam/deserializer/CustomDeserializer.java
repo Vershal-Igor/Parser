@@ -14,19 +14,19 @@ public class CustomDeserializer extends JsonDeserializer<Article> {
     private static final String NO_ELEMENT = "";
 
     @Override
-    public Article deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public Article deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException,
+            JsonProcessingException {
 
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         JsonNode articleNode = node.get("article");
 
-        final String title = articleNode.get("title").asText();
-        String author_name = safetyGetElement(articleNode.get("author_name"));
-
-        if (author_name.isEmpty()) {
-            author_name = DEFAULT_AUTHOR;
+        final String title = safetyGetElement(articleNode.get("title"));
+        String authorName = safetyGetElement(articleNode.get("author_name"));
+        if (authorName.isEmpty()) {
+            authorName = DEFAULT_AUTHOR;
         }
 
-        return new Article(title, author_name);
+        return new Article(title, authorName);
     }
 
     private String safetyGetElement(JsonNode jsonNode) {

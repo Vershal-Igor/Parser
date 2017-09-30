@@ -3,6 +3,7 @@ package com.epam.impl.txt;
 import com.epam.IParser;
 import com.epam.ParserMaker;
 import com.epam.ParserType;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +11,7 @@ import static com.epam.ParserMaker.getParserByName;
 import static org.junit.Assert.*;
 
 public class TXTParserTest {
+    public static Logger logger = Logger.getLogger(TXTParserTest.class);
     private static final String DIRECTORY = "src/main/resources/files";
     private static final String TEST_DIRECTORY = "src/test/resources/files";
     private IParser TXTparser;
@@ -23,7 +25,7 @@ public class TXTParserTest {
     @Test
     public void parseTXTTets() throws Exception {
         assertEquals(TXTparser.getArticles(DIRECTORY), TXTparser.getArticles(TEST_DIRECTORY));
-        System.out.println(TXTparser.getArticles(DIRECTORY));
+        logger.info(TXTparser.getArticles(DIRECTORY));
     }
 
 }

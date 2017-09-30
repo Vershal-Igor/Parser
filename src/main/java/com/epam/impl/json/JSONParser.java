@@ -5,10 +5,12 @@ import com.epam.entity.Article;
 import com.epam.exception.ParserException;
 import com.epam.impl.AbstractParser;
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.apache.log4j.Logger;
 //import org.eclipse.persistence.jaxb.UnmarshallerProperties;
 
 import java.io.File;
@@ -17,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JSONParser extends AbstractParser {
+    public static Logger logger = Logger.getLogger(JSONParser.class);
     private static final String TYPE = "json";
+    private static final String PARSER_EXCEPTION = "Exception while parsing";
 
     public JSONParser() {
         super(TYPE);
@@ -31,22 +35,13 @@ public class JSONParser extends AbstractParser {
         try {
             module.addDeserializer(Article.class, new CustomDeserializer());
             mapper.registerModule(module);
-           // mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
             Article article = mapper.readValue(new File(directory), Article.class);
-
-            //Pretty print
-            /*String prettyStaff = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(article);
-            System.out.println(prettyStaff);*/
 
             articles.add(article);
 
-
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(PARSER_EXCEPTION, e);
+            throw new ParserException(PARSER_EXCEPTION, e);
         }
         return articles;
     }
