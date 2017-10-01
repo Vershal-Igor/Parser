@@ -54,7 +54,7 @@ public class XMLParserTest {
 
 
     @Test
-    public void whenArticleGotFromXmlFile_thenCorrect() throws IOException {
+    public void verifyParsingOfXMLArticleFromFile() throws IOException {
         File xmlFile2 = new File(XML_ARTICLE_2);
         File xmlFile3 = new File(XML_ARTICLE_3);
         File xmlFile5 = new File(XML_ARTICLE_5);
