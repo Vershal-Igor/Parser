@@ -7,9 +7,6 @@ import com.epam.ParserMaker;
 import com.epam.ParserType;
 import com.epam.exception.ParserException;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import static com.epam.ParserMaker.getParserByName;
 
 
