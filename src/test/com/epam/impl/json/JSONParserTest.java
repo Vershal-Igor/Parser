@@ -3,8 +3,10 @@ package com.epam.impl.json;
 import com.epam.IParser;
 import com.epam.ParserMaker;
 import com.epam.ParserType;
+import com.epam.exception.ParserException;
 import com.epam.impl.AbstractParser;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +18,7 @@ public class JSONParserTest {
 
     private static final String DIRECTORY = "src/main/resources/files";
     private static final String TEST_DIRECTORY = "src/test/resources/files";
-    private static final String TYPE = "json";
+    private static final String FAIL_DIRECTORY = "src/main/resources/file";
     private IParser JSONparser;
 
     @Before
@@ -29,6 +31,12 @@ public class JSONParserTest {
     public void parseJSONTest() throws Exception {
         assertEquals(JSONparser.getArticles(DIRECTORY), JSONparser.getArticles(TEST_DIRECTORY));
         logger.info(JSONparser.getArticles(DIRECTORY));
+    }
+
+    @Test(expected = ParserException.class)
+    public void throwParserExceptionTest() throws ParserException {
+        JSONparser.getArticles(FAIL_DIRECTORY);
+        Assert.fail("ParserException should be thrown");
     }
 
 }

@@ -4,8 +4,10 @@ import com.epam.IParser;
 import com.epam.ParserMaker;
 import com.epam.ParserType;
 import com.epam.entity.Article;
+import com.epam.exception.ParserException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,6 +23,7 @@ public class XMLParserTest {
 
     private static final String DIRECTORY = "src/main/resources/files";
     private static final String TEST_DIRECTORY = "src/test/resources/files";
+    private static final String FAIL_DIRECTORY = "src/main/resources/file";
 
     private static final String XML_ARTICLE_2 = "src/main/resources/files/Article2.xml";
     private static final String TITLE_ARTICLE_2 = "The Java Platform module system";
@@ -77,6 +80,12 @@ public class XMLParserTest {
                 article3.getAuthor().equals(AUTHOR_ARTICLE_3));
         assertTrue(article5.getTitle().equals(TITLE_ARTICLE_5) &&
                 article5.getAuthor().equals(AUTHOR_ARTICLE_5));
+    }
+
+    @Test(expected = ParserException.class)
+    public void throwParserExceptionTest() throws ParserException {
+        XMLparser.getArticles(FAIL_DIRECTORY);
+        Assert.fail("ParserException should be thrown");
     }
 
 }

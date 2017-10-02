@@ -3,7 +3,9 @@ package com.epam.impl.txt;
 import com.epam.IParser;
 import com.epam.ParserMaker;
 import com.epam.ParserType;
+import com.epam.exception.ParserException;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,15 +18,17 @@ public class TXTParserTest {
     private static Logger logger = Logger.getLogger(TXTParserTest.class);
     private static final String DIRECTORY = "src/main/resources/files";
     private static final String TEST_DIRECTORY = "src/test/resources/files";
+    private static final String FAIL_DIRECTORY = "src/main/resources/file";
 
-    private static final String XML_ARTICLE_7 = "src/main/resources/files/Article7.txt";
+    private static final String TXT_ARTICLE_7 = "src/main/resources/files/Article7.txt";
     private static final String AUTHOR_ARTICLE_7 = "Jonathan Hult";
 
-    private static final String XML_ARTICLE_8 = "src/main/resources/files/Article8.txt";
+    private static final String TXT_ARTICLE_8 = "src/main/resources/files/Article8.txt";
     private static final String AUTHOR_ARTICLE_8 = "Ricky Ho";
 
-    private static final String XML_ARTICLE_9 = "src/test/resources/files/TestArticle9.txt";
+    private static final String TXT_ARTICLE_9 = "src/test/resources/files/TestArticle9.txt";
     private static final String AUTHOR_ARTICLE_9 = "UNKNOWN";
+
     private IParser TXTparser;
     private TXTParser txtParser;
 
@@ -43,12 +47,18 @@ public class TXTParserTest {
 
     @Test
     public void returnAuthorNameTest() throws Exception {
-        assertTrue(txtParser.pullAuthorName(XML_ARTICLE_7).equals(AUTHOR_ARTICLE_7));
-        logger.info(txtParser.pullAuthorName(XML_ARTICLE_7));
-        assertTrue(txtParser.pullAuthorName(XML_ARTICLE_8).equals(AUTHOR_ARTICLE_8));
-        logger.info(txtParser.pullAuthorName(XML_ARTICLE_8));
-        assertTrue(txtParser.pullAuthorName(XML_ARTICLE_9).equals(AUTHOR_ARTICLE_9));
-        logger.info(txtParser.pullAuthorName(XML_ARTICLE_9));
+        assertTrue(txtParser.pullAuthorName(TXT_ARTICLE_7).equals(AUTHOR_ARTICLE_7));
+        logger.info(txtParser.pullAuthorName(TXT_ARTICLE_7));
+        assertTrue(txtParser.pullAuthorName(TXT_ARTICLE_8).equals(AUTHOR_ARTICLE_8));
+        logger.info(txtParser.pullAuthorName(TXT_ARTICLE_8));
+        assertTrue(txtParser.pullAuthorName(TXT_ARTICLE_9).equals(AUTHOR_ARTICLE_9));
+        logger.info(txtParser.pullAuthorName(TXT_ARTICLE_9));
+    }
+
+    @Test(expected = ParserException.class)
+    public void throwParserExceptionTest() throws ParserException {
+        TXTparser.getArticles(FAIL_DIRECTORY);
+        Assert.fail("ParserException should be thrown");
     }
 
 
