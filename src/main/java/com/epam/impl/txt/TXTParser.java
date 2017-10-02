@@ -33,7 +33,7 @@ public class TXTParser extends AbstractParser {
 
             ArrayList<Article> articles = new ArrayList<>();
             articles.add(new Article(title, author));
-
+            System.out.println("---TXT---\n"+articles);
             return articles;
         } catch (FileNotFoundException e) {
             logger.error(FNF_EXCEPTION + directory, e);

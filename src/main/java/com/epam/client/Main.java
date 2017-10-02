@@ -17,17 +17,16 @@ public class Main {
 
         ParserMaker XMLmaker = getParserByName(ParserType.XML);
         IParser XMLparser = XMLmaker.createParser();
-        System.out.println(XMLparser.getArticles(DIRECTORY));
+        XMLparser.getArticles(DIRECTORY);
 
         ParserMaker JSONmaker = getParserByName(ParserType.JSON);
         IParser JSONParser = JSONmaker.createParser();
-        System.out.println(JSONParser.getArticles(DIRECTORY));
+        JSONParser.getArticles(DIRECTORY);
 
 
         ParserMaker TXTmaker = getParserByName(ParserType.TXT);
         IParser TXTParser = TXTmaker.createParser();
-        System.out.println(TXTParser.getArticles(DIRECTORY));
-
+        TXTParser.getArticles(DIRECTORY);
 
     }
 }

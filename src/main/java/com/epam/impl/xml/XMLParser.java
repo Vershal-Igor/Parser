@@ -35,6 +35,7 @@ public class XMLParser extends AbstractParser {
             logger.error(PARSER_EXCEPTION, e);
             throw new ParserException(PARSER_EXCEPTION, e);
         }
+        System.out.println("---XML---\n"+articles);
         return articles;
     }
 
@@ -60,19 +61,5 @@ public class XMLParser extends AbstractParser {
         br.close();
         return sb.toString();
     }
-
-    /*public List<Article> parse(String directory) throws ParserException {
-        List<Article> articles = new ArrayList<>();
-        try {
-            JAXBContext context = JAXBContext.newInstance(Article.class);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-
-            Object o = unmarshaller.unmarshal(new File(directory));
-            articles.add((Article) o);
-        } catch (JAXBException e) {
-            throw new ParserException("Parsing exception", e);
-        }
-        return articles;
-    }*/
 
 }

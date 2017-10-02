@@ -46,10 +46,8 @@ public class Article implements Serializable {
 
     @Override
     public String toString() {
-        return "Article{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                '}';
+        return "Author: " + author +
+                "; Title: " + title;
     }
 
     @Override

@@ -43,6 +43,7 @@ public class JSONParser extends AbstractParser {
             logger.error(PARSER_EXCEPTION, e);
             throw new ParserException(PARSER_EXCEPTION, e);
         }
+        System.out.println("---JSON---\n"+articles);
         return articles;
     }
 
