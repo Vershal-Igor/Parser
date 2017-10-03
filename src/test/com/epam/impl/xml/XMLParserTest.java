@@ -21,6 +21,8 @@ import static org.junit.Assert.*;
 public class XMLParserTest {
     private static Logger logger = Logger.getLogger(XMLParserTest.class);
 
+    private static final String TYPE = "xml";
+
     private static final String DIRECTORY = "src/main/resources/files";
     private static final String TEST_DIRECTORY = "src/test/resources/files";
     private static final String FAIL_DIRECTORY = "src/main/resources/file";
@@ -36,6 +38,10 @@ public class XMLParserTest {
     private static final String XML_ARTICLE_5 = "src/main/resources/files/Article5.xml";
     private static final String TITLE_ARTICLE_5 = "UNKNOWN";
     private static final String AUTHOR_ARTICLE_5 = "Thorben Janssen";
+
+    private static final String[] XML_FILES = {"src\\main\\resources\\files\\Article2.xml",
+            "src\\main\\resources\\files\\Article3.xml","src\\main\\resources\\files\\Article5.xml"};
+
 
     private IParser XMLparser;
     private XmlMapper xmlMapper;
@@ -81,6 +87,13 @@ public class XMLParserTest {
         assertTrue(article5.getTitle().equals(TITLE_ARTICLE_5) &&
                 article5.getAuthor().equals(AUTHOR_ARTICLE_5));
     }
+
+    @Test
+    public void getJSONFilesFromDirectoryTest() throws ParserException {
+        XMLparser.getConcreteTypeFilesFromDirectory(DIRECTORY,TYPE);
+        assertEquals(XMLparser.getConcreteTypeFilesFromDirectory(DIRECTORY,TYPE),XML_FILES);
+    }
+
 
     @Test(expected = ParserException.class)
     public void throwParserExceptionTest() throws ParserException {

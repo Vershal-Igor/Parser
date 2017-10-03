@@ -9,5 +9,6 @@ import java.util.List;
 public interface IParser {
 
     List<Article> getArticles(String directory) throws ParserException;
+    String[] getConcreteTypeFilesFromDirectory(String directory, String type) throws ParserException;
 
 }

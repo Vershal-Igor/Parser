@@ -16,6 +16,8 @@ public class TXTParserTest {
 
 
     private static Logger logger = Logger.getLogger(TXTParserTest.class);
+    private static final String TYPE = "txt";
+
     private static final String DIRECTORY = "src/main/resources/files";
     private static final String TEST_DIRECTORY = "src/test/resources/files";
     private static final String FAIL_DIRECTORY = "src/main/resources/file";
@@ -28,6 +30,9 @@ public class TXTParserTest {
 
     private static final String TXT_ARTICLE_9 = "src/test/resources/files/TestArticle9.txt";
     private static final String AUTHOR_ARTICLE_9 = "UNKNOWN";
+
+    private static final String[] TXT_FILES = {"src\\main\\resources\\files\\Article7.txt",
+            "src\\main\\resources\\files\\Article8.txt","src\\main\\resources\\files\\TestArticle9.txt"};
 
     private IParser TXTparser;
     private TXTParser txtParser;
@@ -53,6 +58,12 @@ public class TXTParserTest {
         logger.info(txtParser.pullAuthorName(TXT_ARTICLE_8));
         assertTrue(txtParser.pullAuthorName(TXT_ARTICLE_9).equals(AUTHOR_ARTICLE_9));
         logger.info(txtParser.pullAuthorName(TXT_ARTICLE_9));
+    }
+
+    @Test
+    public void getTXTFilesFromDirectoryTest() throws ParserException {
+        TXTparser.getConcreteTypeFilesFromDirectory(DIRECTORY,TYPE);
+        assertEquals(TXTparser.getConcreteTypeFilesFromDirectory(DIRECTORY,TYPE),TXT_FILES);
     }
 
     @Test(expected = ParserException.class)
