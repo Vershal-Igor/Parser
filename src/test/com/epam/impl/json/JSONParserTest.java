@@ -8,7 +8,9 @@ import com.epam.impl.AbstractParser;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static com.epam.ParserMaker.getParserByName;
 import static org.junit.Assert.*;
@@ -26,6 +28,9 @@ public class JSONParserTest {
             "src\\main\\resources\\files\\Article4.json","src\\main\\resources\\files\\Article6.json"};
     private IParser JSONparser;
 
+    @Rule
+    public ExpectedException thrown= ExpectedException.none();
+
     @Before
     public void setUp() throws Exception {
         ParserMaker JSONmaker = getParserByName(ParserType.JSON);
@@ -33,21 +38,21 @@ public class JSONParserTest {
     }
 
     @Test
-    public void parseJSONTest() throws Exception {
+    public void shouldParseJSON() throws Exception {
         assertEquals(JSONparser.getArticles(DIRECTORY), JSONparser.getArticles(TEST_DIRECTORY));
         logger.info(JSONparser.getArticles(DIRECTORY));
     }
 
     @Test
-    public void getJSONFilesFromDirectoryTest() throws ParserException {
+    public void shouldReturnJSONFilesFromDirectory() throws ParserException {
         JSONparser.getConcreteTypeFilesFromDirectory(DIRECTORY,TYPE);
         assertEquals(JSONparser.getConcreteTypeFilesFromDirectory(DIRECTORY,TYPE),JSON_FILES);
     }
 
-    @Test(expected = ParserException.class)
-    public void throwParserExceptionTest() throws ParserException {
+    @Test
+    public void shouldThrowParserException() throws ParserException {
+        thrown.expect(ParserException.class);
         JSONparser.getArticles(FAIL_DIRECTORY);
-        Assert.fail("ParserException should be thrown");
     }
 
 }

@@ -9,10 +9,13 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.io.*;
 
+import static com.epam.ParserMaker.EXCEPTION;
 import static com.epam.ParserMaker.getParserByName;
 import static com.epam.impl.xml.XMLParser.inputStreamToString;
 import static com.epam.impl.xml.XMLParser.returnArticleWithCorrectValues;
@@ -40,11 +43,14 @@ public class XMLParserTest {
     private static final String AUTHOR_ARTICLE_5 = "Thorben Janssen";
 
     private static final String[] XML_FILES = {"src\\main\\resources\\files\\Article2.xml",
-            "src\\main\\resources\\files\\Article3.xml","src\\main\\resources\\files\\Article5.xml"};
+            "src\\main\\resources\\files\\Article3.xml", "src\\main\\resources\\files\\Article5.xml"};
 
 
     private IParser XMLparser;
     private XmlMapper xmlMapper;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
@@ -55,50 +61,61 @@ public class XMLParserTest {
     }
 
     @Test
-    public void parseXMLTest() throws Exception {
+    public void shouldParseXML() throws Exception {
         assertEquals(XMLparser.getArticles(DIRECTORY), XMLparser.getArticles(TEST_DIRECTORY));
         logger.info(XMLparser.getArticles(DIRECTORY));
         System.out.println(XMLparser.getArticles(DIRECTORY));
     }
 
-
     @Test
-    public void verifyParsingOfXMLArticleFromFile() throws IOException {
+    public void shouldReturnCorrectParametersForArticle2() throws IOException {
         File xmlFile2 = new File(XML_ARTICLE_2);
-        File xmlFile3 = new File(XML_ARTICLE_3);
-        File xmlFile5 = new File(XML_ARTICLE_5);
 
         String xml2 = inputStreamToString(new FileInputStream(xmlFile2));
-        String xml3 = inputStreamToString(new FileInputStream(xmlFile3));
-        String xml5 = inputStreamToString(new FileInputStream(xmlFile5));
 
         Article article2 = xmlMapper.readValue(xml2, Article.class);
-        Article article3 = xmlMapper.readValue(xml3, Article.class);
-        Article article5 = xmlMapper.readValue(xml5, Article.class);
-
         logger.debug(returnArticleWithCorrectValues(article2));
-        logger.debug(returnArticleWithCorrectValues(article3));
-        logger.debug(returnArticleWithCorrectValues(article5));
 
         assertTrue(article2.getTitle().equals(TITLE_ARTICLE_2) &&
                 article2.getAuthor().equals(AUTHOR_ARTICLE_2));
+    }
+
+    @Test
+    public void shouldReturnCorrectParametersForArticle3() throws IOException {
+        File xmlFile3 = new File(XML_ARTICLE_3);
+
+        String xml3 = inputStreamToString(new FileInputStream(xmlFile3));
+
+        Article article3 = xmlMapper.readValue(xml3, Article.class);
+        logger.debug(returnArticleWithCorrectValues(article3));
+
         assertTrue(article3.getTitle().equals(TITLE_ARTICLE_3) &&
                 article3.getAuthor().equals(AUTHOR_ARTICLE_3));
+    }
+
+    @Test
+    public void shouldReturnCorrectParametersForArticle5() throws IOException {
+        File xmlFile5 = new File(XML_ARTICLE_5);
+
+        String xml5 = inputStreamToString(new FileInputStream(xmlFile5));
+
+        Article article5 = xmlMapper.readValue(xml5, Article.class);
+        logger.debug(returnArticleWithCorrectValues(article5));
+
         assertTrue(article5.getTitle().equals(TITLE_ARTICLE_5) &&
                 article5.getAuthor().equals(AUTHOR_ARTICLE_5));
     }
 
     @Test
-    public void getJSONFilesFromDirectoryTest() throws ParserException {
-        XMLparser.getConcreteTypeFilesFromDirectory(DIRECTORY,TYPE);
-        assertEquals(XMLparser.getConcreteTypeFilesFromDirectory(DIRECTORY,TYPE),XML_FILES);
+    public void shouldReturnXMLFilesFromDirectory() throws ParserException {
+        XMLparser.getConcreteTypeFilesFromDirectory(DIRECTORY, TYPE);
+        assertEquals(XMLparser.getConcreteTypeFilesFromDirectory(DIRECTORY, TYPE), XML_FILES);
     }
 
-
-    @Test(expected = ParserException.class)
-    public void throwParserExceptionTest() throws ParserException {
+    @Test
+    public void shouldThrowParserException() throws ParserException {
+        thrown.expect(ParserException.class);
         XMLparser.getArticles(FAIL_DIRECTORY);
-        Assert.fail("ParserException should be thrown");
     }
 
 }
