@@ -7,20 +7,21 @@ import com.epam.entity.Article;
 import com.epam.exception.ParserException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.io.*;
 
-import static com.epam.ParserMaker.EXCEPTION;
 import static com.epam.ParserMaker.getParserByName;
 import static com.epam.impl.xml.XMLParser.inputStreamToString;
 import static com.epam.impl.xml.XMLParser.returnArticleWithCorrectValues;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
-
+//@RunWith(Parameterized.class)
 public class XMLParserTest {
     private static Logger logger = Logger.getLogger(XMLParserTest.class);
 
@@ -30,24 +31,35 @@ public class XMLParserTest {
     private static final String TEST_DIRECTORY = "src/test/resources/files";
     private static final String FAIL_DIRECTORY = "src/main/resources/file";
 
-    private static final String XML_ARTICLE_2 = "src/main/resources/files/Article2.xml";
+    private static final String XML_ARTICLE_2 = "src\\main\\resources\\files\\Article2.xml";
     private static final String TITLE_ARTICLE_2 = "The Java Platform module system";
     private static final String AUTHOR_ARTICLE_2 = "Sander Mak";
 
-    private static final String XML_ARTICLE_3 = "src/main/resources/files/Article3.xml";
+    private static final String XML_ARTICLE_3 = "src\\main\\resources\\files\\Article3.xml";
     private static final String TITLE_ARTICLE_3 = "Spring Framework - Overview";
     private static final String AUTHOR_ARTICLE_3 = "UNKNOWN";
 
-    private static final String XML_ARTICLE_5 = "src/main/resources/files/Article5.xml";
+    private static final String XML_ARTICLE_5 = "src\\main\\resources\\files\\Article5.xml";
     private static final String TITLE_ARTICLE_5 = "UNKNOWN";
     private static final String AUTHOR_ARTICLE_5 = "Thorben Janssen";
 
-    private static final String[] XML_FILES = {"src\\main\\resources\\files\\Article2.xml",
-            "src\\main\\resources\\files\\Article3.xml", "src\\main\\resources\\files\\Article5.xml"};
 
 
     private IParser XMLparser;
     private XmlMapper xmlMapper;
+
+    @Parameterized.Parameter
+    public String ArticleFileName;
+
+
+    @Parameterized.Parameters(name = "{index}: ArticleFileName - {0}")
+    public static Object[] data() {
+        return new Object[]{
+                XML_ARTICLE_2,
+                XML_ARTICLE_3,
+                XML_ARTICLE_5
+        };
+    }
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -58,6 +70,11 @@ public class XMLParserTest {
         XMLparser = XMLmaker.createParser();
 
         xmlMapper = new XmlMapper();
+    }
+
+    @Test
+    public void shouldReturnXMLFilesFromDirectory() throws ParserException {
+        assertThat(XMLparser.getConcreteTypeFilesFromDirectory(DIRECTORY, TYPE), is(data()));
     }
 
     @Test
@@ -104,12 +121,6 @@ public class XMLParserTest {
 
         assertTrue(article5.getTitle().equals(TITLE_ARTICLE_5) &&
                 article5.getAuthor().equals(AUTHOR_ARTICLE_5));
-    }
-
-    @Test
-    public void shouldReturnXMLFilesFromDirectory() throws ParserException {
-        XMLparser.getConcreteTypeFilesFromDirectory(DIRECTORY, TYPE);
-        assertEquals(XMLparser.getConcreteTypeFilesFromDirectory(DIRECTORY, TYPE), XML_FILES);
     }
 
     @Test

@@ -67,7 +67,7 @@ public class TXTParser extends AbstractParser {
 
     }
 
-    String pullAuthorName(String directory) throws ParserException {
+     String pullAuthorName(String directory) throws ParserException {
         if (returnAuthorName(directory) == null) {
             return DEFAULT_ELEMENT;
         }
