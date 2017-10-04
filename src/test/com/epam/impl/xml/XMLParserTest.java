@@ -35,14 +35,6 @@ public class XMLParserTest {
     private XmlMapper xmlMapper;
 
 
-    public static Object[] xmlArticlesFiles() {
-        return new Object[]{
-                Loader.getXmlArticle2(),
-                Loader.getXmlArticle3(),
-                Loader.getXmlArticle5()
-        };
-    }
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -54,17 +46,6 @@ public class XMLParserTest {
         xmlMapper = new XmlMapper();
     }
 
-    @Test
-    public void shouldReturnXMLFilesFromDirectory() throws ParserException {
-        String[] expected;
-        Matcher<Object[]> actual;
-
-        expected = Loader.getInstance().loadFilesFromDirectoryByType(Loader.getDirectory(), TYPE);
-        actual = is(xmlArticlesFiles());
-
-        assertThat(expected, actual);
-        logger.info(actual);
-    }
 
     @Test
     public void shouldParseXML() throws Exception {

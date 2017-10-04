@@ -153,8 +153,9 @@ public final class Loader {
     public String[] loadFilesFromDirectoryByType(String directory, String type) throws ParserException {
         String[] fileNames;
 
+        Path path = Paths.get(directory);
+
         try {
-            Path path = Paths.get(directory);
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path, String.format(FORMAT_PATTERN, type))) {
 
                 fileNames = StreamSupport
@@ -167,6 +168,7 @@ public final class Loader {
             throw new ParserException(IO_EXCEPTION, e);
         }
     }
+
 }
 
 

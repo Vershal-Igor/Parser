@@ -28,14 +28,6 @@ public class TXTParserTest {
     private Parser TXTparser;
     private TXTParser txtParser;
 
-    public static Object[] txtArticlesFiles() {
-        return new Object[]{
-                Loader.getTxtArticle7(),
-                Loader.getTxtArticle8(),
-                Loader.getTxtArticle9()
-        };
-    }
-
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -47,17 +39,6 @@ public class TXTParserTest {
         txtParser = new TXTParser();
     }
 
-    @Test
-    public void shouldReturnTXTFilesFromDirectory() throws ParserException {
-        String[] expected;
-        Matcher<Object[]> actual;
-
-        expected = Loader.getInstance().loadFilesFromDirectoryByType(Loader.getDirectory(), TYPE);
-        actual = is(txtArticlesFiles());
-
-        assertThat(expected, actual);
-        logger.info(actual);
-    }
 
     @Test
     public void shouldParseTXT() throws Exception {

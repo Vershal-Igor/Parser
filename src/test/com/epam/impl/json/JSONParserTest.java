@@ -28,13 +28,6 @@ public class JSONParserTest {
 
     private Parser JSONparser;
 
-    public static Object[] jsonArticlesFiles() {
-        return new Object[]{
-                Loader.getJsonArticle1(),
-                Loader.getJsonArticle4(),
-                Loader.getJsonArticle6()
-        };
-    }
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -45,17 +38,6 @@ public class JSONParserTest {
         JSONparser = JSONmaker.createParser();
     }
 
-    @Test
-    public void shouldReturnJSONFilesFromDirectory() throws ParserException {
-        String[] expected;
-        Matcher<Object[]> actual;
-
-        expected = Loader.getInstance().loadFilesFromDirectoryByType(Loader.getDirectory(), TYPE);
-        actual = is(jsonArticlesFiles());
-
-        assertThat(expected, actual);
-        logger.info(actual);
-    }
 
     @Test
     public void shouldParseJSON() throws Exception {

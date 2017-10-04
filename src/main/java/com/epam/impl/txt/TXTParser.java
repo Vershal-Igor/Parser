@@ -57,7 +57,6 @@ public class TXTParser extends AbstractParser {
                         author = array[1].trim();
                     } else {
                         author = Loader.getDefaultElemenent();
-                        ;
                     }
                 }
             }
