@@ -11,9 +11,9 @@ import java.util.List;
 
 
 public abstract class AbstractParser implements Parser {
-    private String type;
+    private final String type;
 
-    public AbstractParser(String type) {
+    protected AbstractParser(String type) {
         this.type = type;
     }
 

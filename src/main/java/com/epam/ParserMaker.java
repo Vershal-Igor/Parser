@@ -7,8 +7,8 @@ import com.epam.impl.xml.XMLParserMaker;
 import org.apache.log4j.Logger;
 
 public interface ParserMaker {
-    public static Logger logger = Logger.getLogger(ParserMaker.class);
-    static final String EXCEPTION = "Can't find such type: ";
+    Logger logger = Logger.getLogger(ParserMaker.class);
+    String EXCEPTION = "Can't find such type: ";
 
     Parser createParser();
 

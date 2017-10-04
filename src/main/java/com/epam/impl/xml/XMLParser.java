@@ -14,7 +14,7 @@ import java.util.List;
 
 
 public class XMLParser extends AbstractParser {
-    private static Logger logger = Logger.getLogger(XMLParser.class);
+    private static final Logger logger = Logger.getLogger(XMLParser.class);
     private static final String TYPE = "xml";
 
 
@@ -26,9 +26,8 @@ public class XMLParser extends AbstractParser {
         List<Article> articles = new ArrayList<>();
         File xmlFile = new File(directory);
         XmlMapper xmlMapper = new XmlMapper();
-        String xml = null;
         try {
-            xml = inputStreamToString(new FileInputStream(xmlFile));
+            String xml = inputStreamToString(new FileInputStream(xmlFile));
             Article value = xmlMapper.readValue(xml, Article.class);
             articles.add(returnArticleWithCorrectValues(value));
         } catch (IOException e) {

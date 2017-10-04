@@ -13,7 +13,7 @@ import java.util.stream.StreamSupport;
 
 
 public final class Loader {
-    private static Logger logger = Logger.getLogger(Loader.class);
+    private static final Logger logger = Logger.getLogger(Loader.class);
     private static final ResourceBundle rb = ResourceBundle.getBundle("properties/common");
 
     private static final String DIRECTORY = "DIRECTORY";

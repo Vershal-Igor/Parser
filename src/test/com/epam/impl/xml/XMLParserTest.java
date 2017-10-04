@@ -9,7 +9,7 @@ import com.epam.exception.ParserException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.log4j.Logger;
 
-import org.hamcrest.Matcher;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,13 +22,10 @@ import java.util.List;
 import static com.epam.ParserMaker.getParserByName;
 import static com.epam.impl.xml.XMLParser.inputStreamToString;
 import static com.epam.impl.xml.XMLParser.returnArticleWithCorrectValues;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class XMLParserTest {
-    private static Logger logger = Logger.getLogger(XMLParserTest.class);
-
-    private static final String TYPE = "xml";
+    private static final Logger logger = Logger.getLogger(XMLParserTest.class);
 
 
     private Parser XMLparser;
@@ -36,7 +33,7 @@ public class XMLParserTest {
 
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {

@@ -1,8 +1,8 @@
 package com.epam.entity;
 
 public class Author {
-    String name;
-    Article article;
+    private String name;
+    private Article article;
 
     public String getName() {
         return name;

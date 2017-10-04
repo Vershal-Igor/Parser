@@ -12,7 +12,7 @@ import java.util.*;
 
 
 public class TXTParser extends AbstractParser {
-    private static Logger logger = Logger.getLogger(TXTParser.class);
+    private static final Logger logger = Logger.getLogger(TXTParser.class);
     private static final String AUTHOR_PATERN = "Written by:";
     private static final String TYPE = "txt";
 

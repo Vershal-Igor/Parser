@@ -7,7 +7,6 @@ import com.epam.ParserType;
 import com.epam.entity.Article;
 import com.epam.exception.ParserException;
 import org.apache.log4j.Logger;
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,21 +15,17 @@ import org.junit.rules.ExpectedException;
 import java.util.List;
 
 import static com.epam.ParserMaker.getParserByName;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class TXTParserTest {
-    private static Logger logger = Logger.getLogger(TXTParserTest.class);
-
-    private static final String TYPE = "txt";
-
+    private static final Logger logger = Logger.getLogger(TXTParserTest.class);
 
     private Parser TXTparser;
     private TXTParser txtParser;
 
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {

@@ -7,7 +7,6 @@ import com.epam.ParserType;
 import com.epam.entity.Article;
 import com.epam.exception.ParserException;
 import org.apache.log4j.Logger;
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,20 +16,16 @@ import org.junit.rules.ExpectedException;
 import java.util.List;
 
 import static com.epam.ParserMaker.getParserByName;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class JSONParserTest {
-    private static Logger logger = Logger.getLogger(JSONParserTest.class);
-
-    private static final String TYPE = "json";
-
+    private static final Logger logger = Logger.getLogger(JSONParserTest.class);
 
     private Parser JSONparser;
 
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
@@ -46,6 +41,7 @@ public class JSONParserTest {
 
         expected = JSONparser.loadArticlesFromDirectory(Loader.getDirectory());
         actual = JSONparser.loadArticlesFromDirectory(Loader.getTestDirectory());
+        logger.info(expected);
 
         assertEquals(expected, actual);
     }

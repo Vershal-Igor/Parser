@@ -9,13 +9,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class LoaderTest {
-    private static Logger logger = Logger.getLogger(LoaderTest.class);
+    private static final Logger logger = Logger.getLogger(LoaderTest.class);
 
     private static final String JSON_TYPE = "json";
     private static final String TXT_TYPE = "txt";
     private static final String XML_TYPE = "xml";
 
-    public static Object[] jsonArticlesFiles() {
+    private static Object[] jsonArticlesFiles() {
         return new Object[]{
                 Loader.getJsonArticle1(),
                 Loader.getJsonArticle4(),
@@ -23,7 +23,7 @@ public class LoaderTest {
         };
     }
 
-    public static Object[] txtArticlesFiles() {
+    private static Object[] txtArticlesFiles() {
         return new Object[]{
                 Loader.getTxtArticle7(),
                 Loader.getTxtArticle8(),
@@ -31,7 +31,7 @@ public class LoaderTest {
         };
     }
 
-    public static Object[] xmlArticlesFiles() {
+    private static Object[] xmlArticlesFiles() {
         return new Object[]{
                 Loader.getXmlArticle2(),
                 Loader.getXmlArticle3(),
