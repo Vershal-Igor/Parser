@@ -1,11 +1,11 @@
 package com.epam.impl.txt;
 
-import com.epam.IParser;
+import com.epam.Parser;
 import com.epam.ParserMaker;
 
 public class TXTParserMaker implements ParserMaker {
     @Override
-    public IParser createParser() {
+    public Parser createParser() {
         return new TXTParser();
     }
 }

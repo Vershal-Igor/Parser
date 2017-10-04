@@ -1,5 +1,6 @@
 package com.epam.impl.json;
 
+import com.epam.Loader;
 import com.epam.deserializer.CustomDeserializer;
 import com.epam.entity.Article;
 import com.epam.exception.ParserException;
@@ -21,7 +22,6 @@ import java.util.List;
 public class JSONParser extends AbstractParser {
     private static Logger logger = Logger.getLogger(JSONParser.class);
     private static final String TYPE = "json";
-    private static final String PARSER_EXCEPTION = "Exception while parsing";
 
     public JSONParser() {
         super(TYPE);
@@ -40,8 +40,8 @@ public class JSONParser extends AbstractParser {
             articles.add(article);
 
         } catch (IOException e) {
-            logger.error(PARSER_EXCEPTION, e);
-            throw new ParserException(PARSER_EXCEPTION, e);
+            logger.error(Loader.getParserException(), e);
+            throw new ParserException(Loader.getParserException(), e);
         }
         System.out.println("---JSON---\n"+articles);
         return articles;

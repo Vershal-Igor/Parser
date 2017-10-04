@@ -1,12 +1,12 @@
 package com.epam.impl.xml;
 
 
-import com.epam.IParser;
+import com.epam.Parser;
 import com.epam.ParserMaker;
 
 
 public class XMLParserMaker implements ParserMaker {
-    public IParser createParser() {
+    public Parser createParser() {
         return new XMLParser();
     }
 }

@@ -1,5 +1,6 @@
 package com.epam.impl.txt;
 
+import com.epam.Loader;
 import com.epam.entity.Article;
 import com.epam.exception.ParserException;
 import com.epam.impl.AbstractParser;
@@ -12,12 +13,9 @@ import java.util.*;
 
 public class TXTParser extends AbstractParser {
     private static Logger logger = Logger.getLogger(TXTParser.class);
-    private static final String FNF_EXCEPTION = "No such file:";
     private static final String AUTHOR_PATERN = "Written by:";
-    private static final String DEFAULT_ELEMENT = "UNKNOWN";
-    private static final String IO_EXCEPTION = "Input exception:";
     private static final String TYPE = "txt";
-    private static final String FILE_ENCODING = "utf-8";
+
 
     public TXTParser() {
         super(TYPE);
@@ -25,27 +23,30 @@ public class TXTParser extends AbstractParser {
 
     @Override
     protected List<Article> parse(String directory) throws ParserException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(directory)),
-                Charset.forName(FILE_ENCODING)))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream(
+                                new File(directory)),
+                        Charset.forName(Loader.getFileEncoding())))) {
 
             String title = reader.readLine();
             String author = pullAuthorName(directory);
 
             ArrayList<Article> articles = new ArrayList<>();
             articles.add(new Article(title, author));
-            System.out.println("---TXT---\n"+articles);
+            System.out.println("---TXT---\n" + articles);
             return articles;
         } catch (FileNotFoundException e) {
-            logger.error(FNF_EXCEPTION + directory, e);
-            throw new ParserException(FNF_EXCEPTION + directory, e);
+            logger.error(Loader.getFnfException() + directory, e);
+            throw new ParserException(Loader.getFnfException() + directory, e);
         } catch (IOException e) {
-            logger.error(IO_EXCEPTION, e);
-            throw new ParserException(IO_EXCEPTION, e);
+            logger.error(Loader.getIoException(), e);
+            throw new ParserException(Loader.getIoException(), e);
         }
     }
 
-    private String returnAuthorName(String directory) throws ParserException {
-        String author = null;
+    String pullAuthorName(String directory) throws ParserException {
+        String author = Loader.getDefaultElemenent();
         try {
             Scanner scanner = new Scanner(new FileReader(directory));
             while (scanner.hasNextLine()) {
@@ -55,26 +56,18 @@ public class TXTParser extends AbstractParser {
                     if (array.length == 2) {
                         author = array[1].trim();
                     } else {
-                        author = DEFAULT_ELEMENT;
+                        author = Loader.getDefaultElemenent();
+                        ;
                     }
                 }
             }
-            return author;
         } catch (FileNotFoundException e) {
-            logger.error(FNF_EXCEPTION + directory, e);
-            throw new ParserException(FNF_EXCEPTION + directory, e);
+            logger.error(Loader.getFnfException() + directory, e);
+            throw new ParserException(Loader.getFnfException() + directory, e);
         }
-
+        return author;
     }
 
-     String pullAuthorName(String directory) throws ParserException {
-        if (returnAuthorName(directory) == null) {
-            return DEFAULT_ELEMENT;
-        }
-        if (returnAuthorName(directory) != null) {
-            return returnAuthorName(directory);
-        }
-        return DEFAULT_ELEMENT;
-    }
+
 }
 

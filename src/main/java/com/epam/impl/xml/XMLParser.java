@@ -1,6 +1,7 @@
 package com.epam.impl.xml;
 
 
+import com.epam.Loader;
 import com.epam.entity.Article;
 import com.epam.exception.ParserException;
 import com.epam.impl.AbstractParser;
@@ -15,8 +16,7 @@ import java.util.List;
 public class XMLParser extends AbstractParser {
     private static Logger logger = Logger.getLogger(XMLParser.class);
     private static final String TYPE = "xml";
-    private static final String DEFAULT_ELEMENT = "UNKNOWN";
-    private static final String PARSER_EXCEPTION = "Exception while parsing";
+
 
     public XMLParser() {
         super(TYPE);
@@ -32,8 +32,8 @@ public class XMLParser extends AbstractParser {
             Article value = xmlMapper.readValue(xml, Article.class);
             articles.add(returnArticleWithCorrectValues(value));
         } catch (IOException e) {
-            logger.error(PARSER_EXCEPTION, e);
-            throw new ParserException(PARSER_EXCEPTION, e);
+            logger.error(Loader.getParserException(), e);
+            throw new ParserException(Loader.getParserException(), e);
         }
         System.out.println("---XML---\n"+articles);
         return articles;
@@ -42,11 +42,11 @@ public class XMLParser extends AbstractParser {
     static Article returnArticleWithCorrectValues(Article value) {
 
         if (value.getTitle() == null) {
-            value.setTitle(DEFAULT_ELEMENT);
+            value.setTitle(Loader.getDefaultElemenent());
         }
 
         if (value.getAuthor() == null) {
-            value.setAuthor(DEFAULT_ELEMENT);
+            value.setAuthor(Loader.getDefaultElemenent());
         }
         return value;
     }

@@ -1,52 +1,43 @@
 package com.epam.impl.json;
 
-import com.epam.IParser;
+import com.epam.Loader;
+import com.epam.Parser;
 import com.epam.ParserMaker;
 import com.epam.ParserType;
+import com.epam.entity.Article;
 import com.epam.exception.ParserException;
 import org.apache.log4j.Logger;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+
+
+import java.util.List;
 
 import static com.epam.ParserMaker.getParserByName;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
-//@RunWith(Parameterized.class)
+
 public class JSONParserTest {
     private static Logger logger = Logger.getLogger(JSONParserTest.class);
 
     private static final String TYPE = "json";
 
-    private static final String DIRECTORY = "src/main/resources/files";
-    private static final String TEST_DIRECTORY = "src/test/resources/files";
-    private static final String FAIL_DIRECTORY = "src/main/resources/file";
 
-    private static final String JSON_ARTICLE_1 = "src\\main\\resources\\files\\Article1.json";
-    private static final String JSON_ARTICLE_4 = "src\\main\\resources\\files\\Article4.json";
-    private static final String JSON_ARTICLE_6 = "src\\main\\resources\\files\\Article6.json";
+    private Parser JSONparser;
 
-    private IParser JSONparser;
-
-
-    @Parameterized.Parameter
-    public String ArticleFileName;
-
-
-    @Parameterized.Parameters(name = "{index}: ArticleFileName - {0}")
-    public static Object[] data() {
+    public static Object[] jsonArticlesFiles() {
         return new Object[]{
-                JSON_ARTICLE_1,
-                JSON_ARTICLE_4,
-                JSON_ARTICLE_6
+                Loader.getJsonArticle1(),
+                Loader.getJsonArticle4(),
+                Loader.getJsonArticle6()
         };
     }
 
     @Rule
-    public ExpectedException thrown= ExpectedException.none();
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
@@ -56,19 +47,31 @@ public class JSONParserTest {
 
     @Test
     public void shouldReturnJSONFilesFromDirectory() throws ParserException {
-        assertThat(JSONparser.getConcreteTypeFilesFromDirectory(DIRECTORY, TYPE), is(data()));
+        String[] expected;
+        Matcher<Object[]> actual;
+
+        expected = Loader.getInstance().loadFilesFromDirectoryByType(Loader.getDirectory(), TYPE);
+        actual = is(jsonArticlesFiles());
+
+        assertThat(expected, actual);
+        logger.info(actual);
     }
 
     @Test
     public void shouldParseJSON() throws Exception {
-        assertEquals(JSONparser.getArticles(DIRECTORY), JSONparser.getArticles(TEST_DIRECTORY));
-        logger.info(JSONparser.getArticles(DIRECTORY));
+        List<Article> expected;
+        List<Article> actual;
+
+        expected = JSONparser.loadArticlesFromDirectory(Loader.getDirectory());
+        actual = JSONparser.loadArticlesFromDirectory(Loader.getTestDirectory());
+
+        assertEquals(expected, actual);
     }
 
     @Test
     public void shouldThrowParserException() throws ParserException {
         thrown.expect(ParserException.class);
-        JSONparser.getArticles(FAIL_DIRECTORY);
+        JSONparser.loadArticlesFromDirectory(Loader.getFailDirectory());
     }
 
 }

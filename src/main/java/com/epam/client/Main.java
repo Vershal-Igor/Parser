@@ -1,11 +1,18 @@
 package com.epam.client;
 
 
-import com.epam.IParser;
+
+import com.epam.Loader;
+import com.epam.Parser;
 import com.epam.ParserMaker;
 
 import com.epam.ParserType;
 import com.epam.exception.ParserException;
+
+
+import java.io.IOException;
+
+
 
 import static com.epam.ParserMaker.getParserByName;
 
@@ -13,20 +20,20 @@ import static com.epam.ParserMaker.getParserByName;
 public class Main {
     private static final String DIRECTORY = "src/main/resources/files";
 
-    public static void main(String[] args) throws ParserException {
+    public static void main(String[] args) throws ParserException, IOException {
 
         ParserMaker XMLmaker = getParserByName(ParserType.XML);
-        IParser XMLparser = XMLmaker.createParser();
-        XMLparser.getArticles(DIRECTORY);
+        Parser XMLparser = XMLmaker.createParser();
+        XMLparser.loadArticlesFromDirectory(DIRECTORY);
 
         ParserMaker JSONmaker = getParserByName(ParserType.JSON);
-        IParser JSONParser = JSONmaker.createParser();
-        JSONParser.getArticles(DIRECTORY);
+        Parser JSONParser = JSONmaker.createParser();
+        JSONParser.loadArticlesFromDirectory(DIRECTORY);
 
 
         ParserMaker TXTmaker = getParserByName(ParserType.TXT);
-        IParser TXTParser = TXTmaker.createParser();
-        TXTParser.getArticles(DIRECTORY);
+        Parser TXTParser = TXTmaker.createParser();
+        TXTParser.loadArticlesFromDirectory(DIRECTORY);
 
     }
 }

@@ -1,54 +1,38 @@
 package com.epam.impl.txt;
 
-import com.epam.IParser;
+import com.epam.Loader;
+import com.epam.Parser;
 import com.epam.ParserMaker;
 import com.epam.ParserType;
+import com.epam.entity.Article;
 import com.epam.exception.ParserException;
 import org.apache.log4j.Logger;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+
+import java.util.List;
 
 import static com.epam.ParserMaker.getParserByName;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-//@RunWith(Parameterized.class)
 public class TXTParserTest {
     private static Logger logger = Logger.getLogger(TXTParserTest.class);
 
     private static final String TYPE = "txt";
 
-    private static final String DIRECTORY = "src/main/resources/files";
-    private static final String TEST_DIRECTORY = "src/test/resources/files";
-    private static final String FAIL_DIRECTORY = "src/main/resources/file";
 
-    private static final String TXT_ARTICLE_7 = "src\\main\\resources\\files\\Article7.txt";
-    private static final String AUTHOR_ARTICLE_7 = "Jonathan Hult";
-
-    private static final String TXT_ARTICLE_8 = "src\\main\\resources\\files\\Article8.txt";
-    private static final String AUTHOR_ARTICLE_8 = "Ricky Ho";
-
-    private static final String TXT_ARTICLE_9 = "src\\main\\resources\\files\\TestArticle9.txt";
-    private static final String AUTHOR_ARTICLE_9 = "UNKNOWN";
-
-
-    private IParser TXTparser;
+    private Parser TXTparser;
     private TXTParser txtParser;
 
-    @Parameterized.Parameter
-    public String ArticleFileName;
-
-
-    @Parameterized.Parameters(name = "{index}: ArticleFileName - {0}")
-    public static Object[] data() {
+    public static Object[] txtArticlesFiles() {
         return new Object[]{
-                TXT_ARTICLE_7,
-                TXT_ARTICLE_8,
-                TXT_ARTICLE_9
+                Loader.getTxtArticle7(),
+                Loader.getTxtArticle8(),
+                Loader.getTxtArticle9()
         };
     }
 
@@ -65,37 +49,70 @@ public class TXTParserTest {
 
     @Test
     public void shouldReturnTXTFilesFromDirectory() throws ParserException {
-        assertThat(TXTparser.getConcreteTypeFilesFromDirectory(DIRECTORY, TYPE), is(data()));
+        String[] expected;
+        Matcher<Object[]> actual;
+
+        expected = Loader.getInstance().loadFilesFromDirectoryByType(Loader.getDirectory(), TYPE);
+        actual = is(txtArticlesFiles());
+
+        assertThat(expected, actual);
+        logger.info(actual);
     }
 
     @Test
     public void shouldParseTXT() throws Exception {
-        assertEquals(TXTparser.getArticles(DIRECTORY), TXTparser.getArticles(TEST_DIRECTORY));
-        logger.info(TXTparser.getArticles(DIRECTORY));
+        List<Article> expected;
+        List<Article> actual;
+
+        expected = TXTparser.loadArticlesFromDirectory(Loader.getDirectory());
+        actual = TXTparser.loadArticlesFromDirectory(Loader.getTestDirectory());
+
+        assertEquals(expected, actual);
     }
 
     @Test
     public void shouldReturnCorrectAuthorNameForArticle7() throws Exception {
-        assertTrue(txtParser.pullAuthorName(TXT_ARTICLE_7).equals(AUTHOR_ARTICLE_7));
-        logger.info(txtParser.pullAuthorName(TXT_ARTICLE_7));
+        String expectedAuthorName;
+        String actualAuthorName;
+
+        expectedAuthorName = txtParser.pullAuthorName(Loader.getTxtArticle7());
+        actualAuthorName = Loader.getAuthorArticle7();
+
+        assertEquals(expectedAuthorName, actualAuthorName);
+
+        logger.info(expectedAuthorName);
     }
 
     @Test
     public void shouldReturnCorrectAuthorNameForArticle8() throws Exception {
-        assertTrue(txtParser.pullAuthorName(TXT_ARTICLE_8).equals(AUTHOR_ARTICLE_8));
-        logger.info(txtParser.pullAuthorName(TXT_ARTICLE_8));
+        String expectedAuthorName;
+        String actualAuthorName;
+
+        expectedAuthorName = txtParser.pullAuthorName(Loader.getTxtArticle8());
+        actualAuthorName = Loader.getAuthorArticle8();
+
+        assertEquals(expectedAuthorName, actualAuthorName);
+
+        logger.info(expectedAuthorName);
     }
 
     @Test
     public void shouldReturnCorrectAuthorNameForArticle9() throws Exception {
-        assertTrue(txtParser.pullAuthorName(TXT_ARTICLE_9).equals(AUTHOR_ARTICLE_9));
-        logger.info(txtParser.pullAuthorName(TXT_ARTICLE_9));
+        String expectedAuthorName;
+        String actualAuthorName;
+
+        expectedAuthorName = txtParser.pullAuthorName(Loader.getTxtArticle9());
+        actualAuthorName = Loader.getDefaultElemenent();
+
+        assertEquals(expectedAuthorName, actualAuthorName);
+
+        logger.info(expectedAuthorName);
     }
 
     @Test
     public void shouldThrowParserException() throws ParserException {
         thrown.expect(ParserException.class);
-        TXTparser.getArticles(FAIL_DIRECTORY);
+        TXTparser.loadArticlesFromDirectory(Loader.getFailDirectory());
     }
 
 

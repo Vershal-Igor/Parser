@@ -10,7 +10,7 @@ public interface ParserMaker {
     public static Logger logger = Logger.getLogger(ParserMaker.class);
     static final String EXCEPTION = "Can't find such type: ";
 
-    IParser createParser();
+    Parser createParser();
 
     static ParserMaker getParserByName(ParserType type) {
         switch (type) {
